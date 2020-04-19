@@ -100,18 +100,66 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 		<div id="init-lacking">Your browser lacks required capabilities. Please upgrade it or switch to another to continue.</div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Area 64" startnode="2" creator="Twine" creator-version="2.3.5" ifid="257DC4AB-12FC-4714-97E6-4A6653B82A54" zoom="0.6" format="SugarCube" format-version="2.30.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style><script role="script" id="twine-user-script" type="text/twine-javascript">// Check to see if trackID is the currently playing track
+	<tw-storydata name="Area 64" startnode="9" creator="Twine" creator-version="2.3.5" ifid="257DC4AB-12FC-4714-97E6-4A6653B82A54" zoom="1" format="SugarCube" format-version="2.30.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">#area-marker {
+    background-color: rgb(30, 30, 30);
+    border-radius: 5px;
+    padding: 20px;
+}
+
+#area-holder {
+    background-color: rgb(17, 11, 11);
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.inventory-holder {
+    color: rgb(50, 50, 50);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#textbox-storycode {
+    color: rgb(30, 30, 30);
+    border-radius: 5px;
+    padding: 10px;
+    color: wheat;
+}
+
+#inventory {
+    border-radius: 5px;
+}
+
+#stat-holder {
+    background-color: rgb(30, 30, 30);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+button {
+    border-radius: 5px;
+    font-size: 11px;
+    padding: 1px;
+    background-color: yellowgreen;
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript">// Check to see if trackID is the currently playing track
 window.isPlaying = function (trackID) {
 	var track = SimpleAudio.tracks.get(trackID);
 	return track !== null && track.isPlaying();
-};</script><tw-passagedata pid="1" name="StoryCaption" tags="nobr" position="100,0" size="100,100">&lt;div id=&quot;area-marker&quot;&gt;Current Area:&lt;/div&gt;&lt;br&gt;
-&lt;div id=&quot;area-holder&quot;&gt;&lt;&lt;-$player.Location&gt;&gt;&lt;/div&gt;
+};</script><tw-passagedata pid="1" name="StoryCaption" tags="nobr" position="100,0" size="100,100">&lt;div id=&quot;area-marker&quot;&gt;Current Area:&lt;br&gt;
+	&lt;div id=&quot;area-holder&quot;&gt;&lt;&lt;-$player.Location&gt;&gt;&lt;/div&gt;
+&lt;/div&gt;
 &lt;div id=&quot;stat-holder&quot;&gt;
     Fatigue: &lt;&lt;-$player.Fatigue&gt;&gt;&lt;br&gt;
     &lt;&lt;if $Monster.Noticed&gt;&gt; Distance To Monster: &lt;&lt;-$Monster.Distance&gt;&gt;&lt;br&gt; &lt;&lt;/if&gt;&gt;
 &lt;/div&gt;
-&lt;&lt;Inventory&gt;&gt;</tw-passagedata><tw-passagedata pid="2" name="Title Screen" tags="nobr" position="400,0" size="100,100">&lt;&lt;set $Monster.Distance to 100&gt;&gt;
-&lt;b&gt;[[&gt;Play Game&lt;|Title]]&lt;/b&gt;</tw-passagedata><tw-passagedata pid="3" name="StoryInit" tags="nobr" position="0,0" size="100,100">Player
+&lt;&lt;Inventory&gt;&gt;</tw-passagedata><tw-passagedata pid="2" name="Title Screen" tags="nobr" position="400,0" size="100,100">&lt;h1&gt;Description&lt;/h1&gt;
+&lt;&lt;script&gt;&gt;UIBar.stow()&lt;&lt;/script&gt;&gt;
+&lt;&lt;set $Monster.Distance to 100&gt;&gt;
+&lt;b&gt;Area 64&lt;/b&gt; is a text adventure taking place in the fictional town of Withrope. You are tasked with delivering a package to Area 64, a top secret base hidden somewhere in the town. The only problems are: you don&#39;t have anything other than what you can find around town, You&#39;re told to keep the package &#39;alive&#39; (whatever that means), and to top it all off you don&#39;t even know where Area 64 is! There are six different music tracks in the game so ake sure to have your sound on!&lt;br&gt;&lt;br&gt;
+
+&lt;h1&gt;Controls&lt;/h1&gt;
+The game&#39;s controls are simple. At the end of each passage you are given a number of options in the form of blue links. Just click the links with your mouse.&lt;br&gt;&lt;br&gt;
+
+&lt;b&gt;[[GO TO TITLE SCREEN|Title]]&lt;/b&gt;</tw-passagedata><tw-passagedata pid="3" name="StoryInit" tags="nobr" position="0,0" size="100,100">Player
 &lt;&lt;set $player to {      &quot;Fatigue&quot;:          0,
                         &quot;Location&quot;:         &quot;Location Text Here&quot;,
                         &quot;PackageStatus&quot;:    &quot;Alive&quot;,
@@ -158,7 +206,7 @@ Story
 						&quot;PostOfficeOpen&quot;:		false,
 						&quot;ShopOpen&quot;:				false,
 						&quot;TakenPostOfficeCoffee&quot;: false,
-						&quot;code&quot;:					&quot;&quot;,
+						&quot;Code&quot;:					&quot;&quot;,
 } &gt;&gt;
 
 &lt;&lt;cacheaudio			&quot;Cliffside&quot; &quot;music/Cliffside Hatch.ogg&quot; &gt;&gt;/
@@ -197,10 +245,10 @@ Story
             &lt;&lt;if $Inventory.Key&gt;&gt;           &lt;tr class=&quot;inventory-row&quot;&gt;&lt;td&gt;Key&lt;/td&gt;&lt;td&gt;             &lt;/td&gt;&lt;/tr&gt;                          &lt;&lt;/if&gt;&gt;
             &lt;&lt;if $Inventory.Map&gt;&gt;           &lt;tr class=&quot;inventory-row&quot;&gt;&lt;td&gt;Map&lt;/td&gt;&lt;td&gt;             &lt;/td&gt;&lt;/tr&gt;                          &lt;&lt;/if&gt;&gt;
             &lt;&lt;if $Inventory.Toolbox&gt;&gt;       &lt;tr class=&quot;inventory-row&quot;&gt;&lt;td&gt;Toolbox&lt;/td&gt;&lt;td&gt;         &lt;/td&gt;&lt;/tr&gt;                          &lt;&lt;/if&gt;&gt;
-            &lt;&lt;if $Inventory.Torch&gt;&gt;         &lt;tr class=&quot;inventory-row&quot;&gt;&lt;td&gt;Torch&lt;/td&gt;&lt;td&gt;           &lt;/td&gt;&lt;/tr&gt;                          &lt;&lt;/if&gt;&gt;
+            &lt;&lt;if $Inventory.Torch&gt;&gt;         &lt;tr class=&quot;inventory-row&quot;&gt;&lt;td&gt;Torch&lt;/td&gt;&lt;td&gt;Power: &lt;&lt;-$Inventory.TorchPower&gt;&gt;%&lt;/td&gt;&lt;/tr&gt;                          &lt;&lt;/if&gt;&gt;
             &lt;&lt;if $Inventory.Brick&gt;&gt;         &lt;tr class=&quot;inventory-row&quot;&gt;&lt;td&gt;Brick&lt;/td&gt;&lt;td&gt;           &lt;/td&gt;&lt;/tr&gt;                          &lt;&lt;/if&gt;&gt;
-            &lt;&lt;if $Inventory.Coffee gt 0&gt;&gt;   &lt;tr class=&quot;inventory-row&quot;&gt; &lt;td&gt;Coffee&lt;/td&gt; &lt;td&gt;x&lt;&lt;-$Inventory.Coffee&gt;&gt;&lt;/td&gt; &lt;/tr&gt;&lt;&lt;/if&gt;&gt;
-            &lt;&lt;if $Inventory.Decoy gt 0&gt;&gt;    &lt;tr class=&quot;inventory-row&quot;&gt; &lt;td&gt;Decoy&lt;/td&gt; &lt;td&gt;x&lt;&lt;-$Inventory.Decoy&gt;&gt;&lt;/td&gt; &lt;/tr&gt;   &lt;&lt;/if&gt;&gt;
+            &lt;&lt;if $Inventory.Coffee gt 0&gt;&gt;   &lt;tr class=&quot;inventory-row&quot;&gt; &lt;td&gt;Coffee &lt;&lt;button &quot;Drink&quot;&gt;&gt;&lt;&lt;set $Inventory.Coffee -= 1&gt;&gt;&lt;&lt;set $player.Fatigue -= random(30, 40)&gt;&gt;&lt;&lt;script&gt;&gt;state.display(state.active.title, null, &quot;back&quot;)&lt;&lt;/script&gt;&gt;&lt;&lt;/button&gt;&gt;&lt;/td&gt; &lt;td&gt;x&lt;&lt;-$Inventory.Coffee&gt;&gt;&lt;/td&gt; &lt;/tr&gt;&lt;&lt;/if&gt;&gt;
+            &lt;&lt;if $Inventory.Decoy gt 0&gt;&gt;    &lt;tr class=&quot;inventory-row&quot;&gt; &lt;td&gt;Decoy &lt;&lt;button &quot;Throw&quot;&gt;&gt;&lt;&lt;set $Inventory.Decoy -= 1&gt;&gt;&lt;&lt;set $Monster.Distance += random(50, 70)&gt;&gt;&lt;&lt;script&gt;&gt;state.display(state.active.title, null, &quot;back&quot;)&lt;&lt;/script&gt;&gt;&lt;&lt;/button&gt;&gt;&lt;/td&gt; &lt;td&gt;x&lt;&lt;-$Inventory.Decoy&gt;&gt;&lt;/td&gt; &lt;/tr&gt;   &lt;&lt;/if&gt;&gt;
         &lt;/table&gt;
     &lt;&lt;/widget&gt;&gt;
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="7" name="Intro" tags="nobr" position="1600,0" size="100,100">&lt;&lt;audio &quot;:playing&quot; stop&gt;&gt;
@@ -211,7 +259,7 @@ Story
 You lay there in bed on the cool summer&#39;s night in the small town of Withrope. It&#39;s quite a small town, population of no more than 150 people but despite that it&#39;s quite infamous. It has long been rumoured that a top secret base was hidden somewhere in the town.. Admittedly you &lt;b&gt;were&lt;/b&gt; quite excited to stay in the town for a while when your car broke down, just to see. It sounded so exciting looking for a top secret base hidden in a small closely knit village, however as you began to see the town you began to wonder just how true those rumours may be. 
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;timed 10s t8n&gt;&gt;
-From your west facing window yoou can see almost the entire town from the ominous graveyard, to the ancient post office, from the howling rocky cliffside to the small charming village shop. The thing is: the town&#39;s so small how could the base be here. Alas it seems to just be another conspiracy theory believed only by gullible people such as yourself. You can&#39;t help but think to yourself that you may be missing something though. 
+From your west facing window you can see almost the entire town from the ominous graveyard, to the ancient post office, from the howling rocky cliffside to the small charming village shop. The thing is: the town&#39;s so small how could the base be here. Alas it seems to just be another conspiracy theory believed only by gullible people such as yourself. You can&#39;t help but think to yourself that you may be missing something though. 
 &lt;&lt;/timed&gt;&gt;
 &lt;&lt;timed 20s t8n&gt;&gt;
 &lt;br&gt;&lt;br&gt;
@@ -223,7 +271,7 @@ Your dreams don&#39;t last long though. Just a few hours later you&#39;re awoken
 &lt;&lt;/timed&gt;&gt;
 
 &lt;&lt;timed 35s t8n&gt;&gt;
-There it is again, no mistaking it now. What could be making that horrible noise? You decide to get up and investigate.
+There it is again, no mistaking it now. What could be making that horrible noise? You decide to get up and investigate.&lt;br&gt;&lt;br&gt;
 
 [[Go Downstairs|Bob&#39;s House Intro Downstairs]]
 &lt;&lt;/timed&gt;&gt;
@@ -252,6 +300,8 @@ You stand there with your eyes wide as saucers. &quot;But, but, &quot;. &quot;NO
 [[Hell no, I&#39;m not doing that!|Intro Game Over]]&lt;br&gt;
 &lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="Intro Downstairs 2" tags="nobr" position="2075,150" size="100,100">&lt;&lt;set $Inventory.Package to true&gt;&gt;
 &lt;&lt;set $player.PackageStatus to &quot;Alive&quot;&gt;&gt;
+&lt;&lt;audio &quot;:playing&quot; stop&gt;&gt;
+&lt;&lt;audio &quot;Streets&quot; loop fadein&gt;&gt;
 Bob&#39;s face is filled with relief. &quot;Thank God&quot;, he says.
 &lt;br&gt;
 He hands you the package. It feels wierd and squishy.
@@ -319,9 +369,7 @@ What a situation to have gotten yourself into.&lt;br&gt;&lt;br&gt;
 If you hop the fence you should be able to make it onto Atlantic Street. Since that&#39;s the way to get further into the town, you might as well head down that way.
 &lt;br&gt;
 [[Enter Bob&#39;s house|Bob&#39;s Sitting Room]]&lt;br&gt;
-[[Go West onto Atlantic Street|Atlantic St]]</tw-passagedata><tw-passagedata pid="14" name="Bob&#39;s Sitting Room" tags="nobr" position="2300,600" size="100,100">&lt;&lt;RoomInit&gt;&gt;
-&lt;&lt;set $player.Location to &quot;Bob&#39;s House - Sitting Room&quot;&gt;&gt;
-&lt;&lt;/if&gt;&gt;
+[[Go West onto Atlantic Street|Atlantic St]]</tw-passagedata><tw-passagedata pid="14" name="Bob&#39;s Sitting Room" tags="nobr" position="2300,600" size="100,100">&lt;&lt;set $player.Location to &quot;Bob&#39;s House - Sitting Room&quot;&gt;&gt;
 &lt;&lt;RoomInit&gt;&gt;
 &lt;&lt;set $player.Location to &quot;Bob&#39;s House: Sitting Room&quot;&gt;&gt;
 You return to Bob&#39;s now empty sitting room. Not much to do here though...
@@ -341,10 +389,10 @@ You&#39;re fighting fatigue and want nothing more than to sleep. Surely one quic
 &lt;br&gt; 
 [[Take the coffee|PickupCoffee]]&lt;br&gt; &lt;&lt;/if&gt;&gt;
 &lt;&lt;if !Story.HadNap&gt;&gt; [[Go for a quick power nap|Power Nap]]&lt;br&gt; &lt;&lt;/if&gt;&gt;
-[[Go back downstairs|Bob&#39;s Sitting Room]] &lt;br&gt;</tw-passagedata><tw-passagedata pid="16" name="Atlantic St" tags="nobr" position="550,200" size="100,100">&lt;&lt;RoomInit&gt;&gt;
-&lt;&lt;set $player.location to &quot;Atlantic St.&quot;&gt;&gt;
+[[Go back downstairs|Bob&#39;s Sitting Room]] &lt;br&gt;</tw-passagedata><tw-passagedata pid="16" name="Atlantic St" tags="nobr" position="550,200" size="100,100">&lt;&lt;set $player.location to &quot;Atlantic St.&quot;&gt;&gt;
+&lt;&lt;RoomInit&gt;&gt;
 &lt;&lt;if !$Monster.Noticed&gt;&gt;
-You begin making your way down Atlantic St. still clutching tightly to the package wondering why it had to be you when you hear a noise coming from behind. As you turn around you see a hideous creature. It looked like something out of a sci-fi movie with it&#39;s 6 ears, giant paws, bright orange eyes piercing through the darkness, and most frightening of all, it&#39;s four sets of razor sharp teeth that look like they could slice metal.&lt;br&gt;&lt;br&gt;
+You begin making your way down Atlantic St. still clutching tightly to the package wondering why it had to be you when you hear a noise coming from behind. As you turn around you see a hideous creature. It looks like something out of a sci-fi movie with it&#39;s 6 ears, giant paws, bright orange eyes piercing through the darkness, and most frightening of all, it&#39;s four sets of razor sharp teeth that look like they could slice metal.&lt;br&gt;&lt;br&gt;
 
 &lt;&lt;set $Monster.Noticed to true&gt;&gt;
 &lt;&lt;set $Monster.Distance to random(60, 90)&gt;&gt;
@@ -384,12 +432,15 @@ Your fatigue went down by &lt;&lt;-_recovery&gt;&gt;.
 &lt;&lt;set $Story.TakenPostOfficeCoffee to true&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;set $Inventory.Coffee += 1&gt;&gt;
-[[Return|previous()]]</tw-passagedata><tw-passagedata pid="20" name="RoomInit" tags="widget nobr" position="500,0" size="100,100">&lt;&lt;widget RoomInit&gt;&gt;
-    &lt;&lt;set $player.Fatigue += random(1, 2)&gt;&gt;
+[[Return|previous()]]</tw-passagedata><tw-passagedata pid="20" name="RoomInit" tags="widget nobr" position="500,0" size="100,100">&lt;&lt;script&gt;&gt;UIBar.unstow()&lt;&lt;/script&gt;&gt;
+&lt;&lt;widget RoomInit&gt;&gt;
+    &lt;&lt;set $player.Fatigue += random(1, 3)&gt;&gt;
     &lt;&lt;if $Monster.Noticed&gt;&gt;
-        &lt;&lt;set $Monster.Distance -= random(15, 30)&gt;&gt;
+        &lt;&lt;set $Monster.Distance -= random(20, 40)&gt;&gt;
         &lt;&lt;set $Monster.Distance += random(20, 40)&gt;&gt;
     &lt;&lt;/if&gt;&gt;
+	&lt;&lt;if $Inventory.Torch&gt;&gt;&lt;&lt;set $Inventory.TorchPower -= random(1, 5)&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;if $Inventory.TorchPower lt 0&gt;&gt;&lt;&lt;set $Inventory.TorchPower to 0&gt;&gt;		&lt;&lt;/if&gt;&gt;
     &lt;&lt;StatChecker&gt;&gt;
 
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="21" name="MonsterHug" tags="nobr" position="1800,350" size="100,100">WHA-&lt;br&gt;
@@ -399,7 +450,11 @@ Needless to say, it didn&#39;t end too well for you&lt;br&gt;
 &lt;br&gt;
 &lt;h1&gt;GAME OVER&lt;/h1&gt;&lt;br&gt;&lt;br&gt;
 [[Retry From Previous Turn|previous()]] &lt;br&gt;
-[[Return To Title Screen|Title Screen]]</tw-passagedata><tw-passagedata pid="22" name="Shop Street" tags="nobr" position="700,400" size="100,100">&lt;&lt;RoomInit&gt;&gt;
+[[Return To Title Screen|Title Screen]]</tw-passagedata><tw-passagedata pid="22" name="Shop Street" tags="nobr" position="700,400" size="100,100">&lt;&lt;if previous() is &quot;Village Shop&quot; || previous() is &quot;Post Office&quot;&gt;&gt;
+&lt;&lt;audio &quot;:playing&quot; volume 0.9 fadeout&gt;&gt;
+&lt;&lt;audio &quot;Streets&quot; volume 0.9 fadein&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;RoomInit&gt;&gt;
 &lt;&lt;set $player.Location to &quot;Shop Street&quot;&gt;&gt;
 You make your way down shop street. A number of small shops and facilities line the street. Of note, there is a small village shop and a post office. &lt;&lt;if !$Story.PostOfficeOpen&gt;&gt;
 &lt;&lt;if !$Story.ShopOpen&gt;&gt;
@@ -424,7 +479,11 @@ Both of those places are now easily accessible thanks to your quick thinking and
 &lt;&lt;if $Inventory.Brick &amp;&amp; !$Story.PostOfficeOpen&gt;&gt;[[Break post office window with brick and enter|Post Office]]&lt;br&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $Inventory.Rock &amp;&amp; !$Story.PostOfficeOpen&gt;&gt;[[Break post office window with rock and enter|Post Office]]&lt;br&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $Inventory.Axe &amp;&amp; !$Story.ShopOpen&gt;&gt;[[Break into shop using axe|Village Shop]]&lt;br&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $Inventory.Map&gt;&gt;[[Follow the path to the generator house|Generator House Ext]]&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="23" name="Federal Street" tags="nobr" position="400,400" size="100,100">&lt;&lt;RoomInit&gt;&gt;
+&lt;&lt;if $Inventory.Map&gt;&gt;[[Follow the path to the generator house|Generator House Ext]]&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="23" name="Federal Street" tags="nobr" position="400,400" size="100,100">&lt;&lt;if previous() is &quot;Rocky Cliffs&quot;&gt;&gt;
+&lt;&lt;audio &quot;:playing&quot; stop&gt;&gt;
+&lt;&lt;audio &quot;Streets&quot; loop play&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;RoomInit&gt;&gt;
 &lt;&lt;set $player.Location to &quot;Federal Street&quot;&gt;&gt;
 &lt;&lt;if visited() lte 1&gt;&gt;
 As you&#39;re walking towards Federal St. you realize what was so off. It&#39;s dark. Too dark, all the street lamps are out!&lt;br&gt;
@@ -436,13 +495,24 @@ You re-emerge on Federal Street. You can go west down Chruch Street to get to th
 &lt;br&gt;&lt;br&gt;
 [[Go West onto Church Street|Church Street]]&lt;br&gt;
 [[Go South towards the rocky cliffs|Rocky Cliffs]]&lt;br&gt;
-[[Go back up north to Atlantic Street|Atlantic St]]</tw-passagedata><tw-passagedata pid="24" name="Church Street" tags="nobr" position="300,600" size="100,100">&lt;&lt;RoomInit&gt;&gt;
+[[Go back up north to Atlantic Street|Atlantic St]]</tw-passagedata><tw-passagedata pid="24" name="Church Street" tags="nobr" position="300,600" size="100,100">&lt;&lt;if previous() is &quot;Federal Street&quot;&gt;&gt;
+&lt;&lt;audio &quot;:playing&quot; volume 0.9 fadeout&gt;&gt;
+&lt;&lt;audio &quot;Cemetery&quot; loop volume 0.9 fadein&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;audio &quot;:playing&quot; volume 0.9 fadeout&gt;&gt;
+&lt;&lt;audio &quot;Streets&quot; volume 0.9 fadein&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;RoomInit&gt;&gt;
 &lt;&lt;set $player.Location to &quot;Church Street&quot;&gt;&gt;
 You walk down Church Street and find yourself in the middle of a large square surrounded by houses. Sitting right in the middle of the square is the cemetery. You can&#39;t help but think it&#39;s a bit of a wierd place for a graveyard. Past here it looks like a dead end. Not much to do here other than explore the graveyard.&lt;br&gt;
 &lt;br&gt;
 [[Explore the northern side of the graveyard|Graveyard North]]&lt;br&gt;
 [[Explore the southern part of the graveyard|Graveyard South]]&lt;br&gt;
-[[Go back east onto Federal Street|Federal Street]]</tw-passagedata><tw-passagedata pid="25" name="Rocky Cliffs" tags="nobr" position="500,600" size="100,100">&lt;&lt;RoomInit&gt;&gt;
+[[Go back east onto Federal Street|Federal Street]]</tw-passagedata><tw-passagedata pid="25" name="Rocky Cliffs" tags="nobr" position="500,600" size="100,100">&lt;&lt;if previous() is &quot;Federal Street&quot;&gt;&gt;
+&lt;&lt;audio &quot;:playing&quot; volume 0.9 fadeout&gt;&gt;
+&lt;&lt;audio &quot;Cliffs&quot; volume 0.9 fadein&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;RoomInit&gt;&gt;
 &lt;&lt;set $playerLoccation to &quot;Rocky Cliffs&quot;&gt;&gt;
 &lt;&lt;if visited() lte 1&gt;&gt;
 You hear the howls of the wind as you stand atop the rocky cliffs. It looks to be a dead end. You&#39;re still clutching tightly to the package. Better not drop it, then you definitely wouldn&#39;t be keeping it alive.
@@ -470,9 +540,12 @@ You see a toolbox on the floor.&lt;br&gt;
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if !$Inventory.Rock&gt;&gt; [[Pick up a rock|Rocky Cliffs][$Inventory.Rock to true]]&lt;br&gt; &lt;&lt;/if&gt;&gt;
 &lt;&lt;if !$Inventory.Key &amp;&amp; $Inventory.Torch &amp;&amp; $Inventory.Generator&gt;&gt; [[Pick up the key and go back to Federal St.|Federal Street][$Inventory.Key to true]]&lt;br&gt; &lt;&lt;/if&gt;&gt;
-&lt;&lt;if $Inventory.Ladder&gt;&gt;[[Use Ladder to reach a ledge on the cliff|Area 64 Entrance]]&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="26" name="Title" tags="" position="400,100" size="100,100">&lt;&lt;audio Title volume 1 play&gt;&gt;
-&lt;h2&gt;[[&gt;START&lt;|Intro]]&lt;/h2&gt;</tw-passagedata><tw-passagedata pid="27" name="Graveyard North" tags="nobr" position="225,750" size="100,100">&lt;&lt;set $Inventory.Generator to true&gt;&gt;
-&lt;&lt;RoomInit&gt;&gt;
+&lt;&lt;if $Inventory.Ladder&gt;&gt;[[Use Ladder to reach a ledge on the cliff|Area 64 Entrance]]&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="26" name="Title" tags="nobr" position="400,100" size="100,100">&lt;&lt;audio &quot;:playing&quot; stop&gt;&gt;
+&lt;&lt;audio Title volume 1 play&gt;&gt;
+&lt;img src=&quot;Images/TitleCard.png&quot;&gt;
+&lt;&lt;timed 4s t8n&gt;&gt;
+&lt;h2&gt;[[&gt;BEGIN GAME&lt;|Intro]]&lt;/h2&gt;
+&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="27" name="Graveyard North" tags="nobr" position="225,750" size="100,100">&lt;&lt;RoomInit&gt;&gt;
 &lt;&lt;set $player.Location to &quot;Graveyard - North&quot;&gt;&gt;
 &lt;&lt;if visited() lte 1&gt;&gt;
 You creep your way into the northern part of the graveyard careful not to make a sound. It&#39;s pitch black. You stumble your way through the area densly populated with graves. Why were there so many graves? &lt;br&gt;&lt;br&gt;
@@ -520,7 +593,15 @@ As you keep walking you realise you&#39;re nearly at graveyard north. You can ke
 [[Leave the graveyard and return to Church Street|Church Street]]&lt;br&gt;
 &lt;br&gt;
 &lt;&lt;if !$Inventory.Axe&gt;&gt; [[Pick up the axe|Graveyard South][$Inventory.Axe to true]]&lt;br&gt; &lt;&lt;/if&gt;&gt;
-&lt;&lt;if $Inventory.Generator &amp;&amp; !$Story.CollectedCemDecoy&gt;&gt; [[Pick up the decoy|PickupDecoy]] &lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="29" name="Area 64 Entrance" tags="" position="0,900" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="30" name="Post Office" tags="" position="625,550" size="100,100">&lt;&lt;if visited() lte 1&gt;&gt;
+&lt;&lt;if $Inventory.Generator &amp;&amp; !$Story.CollectedCemDecoy&gt;&gt; [[Pick up the decoy|PickupDecoy]] &lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="29" name="Area 64 Entrance" tags="nobr" position="0,900" size="100,100">&lt;&lt;audio &quot;:playing&quot; fadeout&gt;&gt;
+&lt;&lt;audio &quot;Cliffide&quot; loop fadein&gt;&gt;</tw-passagedata><tw-passagedata pid="30" name="Post Office" tags="nobr" position="625,550" size="100,100">&lt;&lt;if previous is &quot;Shop Street&quot;&gt;&gt;
+&lt;&lt;audio &quot;:playing&quot; volume 0.9 fadeout&gt;&gt;
+&lt;&lt;audio &quot;Indoor&quot; fadein volume 0.9 fadein&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;RoomInit&gt;&gt;
+&lt;&lt;set $player.Location to &quot;Post Office&quot;&gt;&gt;
+&lt;&lt;set $Story.PostOfficeOpen to true&gt;&gt;
+&lt;&lt;if visited() lte 1&gt;&gt;
 You smash the window of the post office in. Inside you find it&#39;s pitch black. The power must be gone here too. You can feel a map on the desk. Unfortunately it&#39;s too dark to read it. Maybe if you got some sort of light source and used it.
 &lt;&lt;/if&gt;&gt;
 
@@ -530,8 +611,30 @@ You smash the window of the post office in. Inside you find it&#39;s pitch black
 
 &lt;&lt;if $Inventory.Torch&gt;&gt; [[Use the torch to read the map|Map]] &lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
-[[Go back outside|Shop Street]] </tw-passagedata><tw-passagedata pid="31" name="Village Shop" tags="" position="775,550" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="32" name="Map" tags="nobr" position="625,700" size="100,100">&lt;&lt;set $Inventory.Map to true&gt;&gt;
-As you gaze down at the map something catches your eye. Just southwest of here there&#39;s a generator house! Maybe we can use that to light the place up again.</tw-passagedata><tw-passagedata pid="33" name="Generator House Ext" tags="nobr" position="900,400" size="100,100">&lt;&lt;set $player.Location to &quot;Generator House Ext.&quot;&gt;&gt;
+[[Go back outside|Shop Street]] </tw-passagedata><tw-passagedata pid="31" name="Village Shop" tags="nobr" position="775,550" size="100,100">&lt;&lt;RoomInit&gt;&gt;
+&lt;&lt;set $player.Location to &quot;Village Shop&quot;&gt;&gt;
+&lt;&lt;set $Story.ShopOpen to true&gt;&gt;
+&lt;&lt;audio &quot;:playing&quot; volume 0.9 fadeout&gt;&gt;
+&lt;&lt;audio &quot;Indoor&quot; volume 0.9 fadein&gt;&gt;
+
+&lt;&lt;if visited() lte 1&gt;&gt;
+You enter the pitch black shop through the door you just smashed down. Unfortunately it&#39;s too dark to see anything in here. You can, however feel a torch on the shelf in front of you. Maybe it&#39;ll come in handy.
+&lt;&lt;else&gt;&gt;
+You re-enter the shop, what better place to look for clues than a shop like this.&lt;br&gt;&lt;br&gt;
+&lt;&lt;/if&gt;&gt;
+
+&lt;&lt;if $Inventory.Key&gt;&gt;
+It looks like the key you found on the cliffs was for the shop&#39;s store room. There looks to be a large red ladder in there.
+&lt;&lt;/if&gt;&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;&lt;if !$Inventory.Torch&gt;&gt; [[Pick up the torch and go|Shop Street][$Inventory.Torch to true]]&lt;br&gt; &lt;&lt;/if&gt;&gt;
+[[Leave the shop|Shop Street]]&lt;br&gt;
+&lt;&lt;if !$Inventory.Ladder &amp;&amp; $Inventory.Key&gt;&gt; [[Take the ladder and go|Shop Street][$Inventory.Ladder to true&gt;&gt;&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="Map" tags="nobr" position="625,700" size="100,100">&lt;&lt;set $Inventory.Map to true&gt;&gt;
+As you gaze down at the map something catches your eye. Just southwest of here there&#39;s a generator house! Maybe we can use that to light the place up again.&lt;br&gt;&lt;br&gt;
+
+&lt;img src=&quot;Images/Map.png&quot;&gt;
+&lt;br&gt;&lt;br&gt;
+[[Return|Post Office]]</tw-passagedata><tw-passagedata pid="33" name="Generator House Ext" tags="nobr" position="900,400" size="100,100">&lt;&lt;set $player.Location to &quot;Generator House Ext.&quot;&gt;&gt;
 &lt;&lt;RoomInit&gt;&gt;
 &lt;&lt;set $Monster.Distance += 50&gt;&gt;
 &lt;&lt;if visited() lte 1&gt;&gt;
